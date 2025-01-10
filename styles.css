@@ -1,0 +1,243 @@
+/* 기본 스타일 */
+body {
+    background-color: #E8F3D6;
+    min-height: 100vh;
+    padding: 2rem 0;
+    font-family: 'Gaegu', cursive;
+    color: #5C4B51;
+    line-height: 1.6;
+    position: relative;
+}
+
+/* 배경 잎사귀 효과 */
+.leaves-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(#94B49F 1px, transparent 1px),
+        radial-gradient(#FCF6BD 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 800px;
+    padding: 2rem;
+}
+
+/* 종이 배경 효과 */
+.paper-background {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(148, 180, 159, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #94B49F;
+}
+
+.paper-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23FCF6BD" fill-opacity="0.1" x="0" y="0" width="100" height="100"/></svg>');
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* 제목 스타일 */
+h1, h2, h3, h4 {
+    color: #94B49F;
+    font-weight: 700;
+    text-shadow: 1px 1px 0 #FCF6BD;
+}
+
+/* 테스트 섹션 */
+.test-section {
+    padding: 1.5rem;
+}
+
+/* 옵션 카드 */
+.option-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #FCF6BD;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+}
+
+.option-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(148, 180, 159, 0.2);
+    border-color: #94B49F;
+    background-color: #fdfaf0;
+}
+
+.option-card.selected {
+    border-color: #94B49F;
+    background-color: #E8F3D6;
+}
+
+/* 진행 바 */
+.progress {
+    height: 0.8rem;
+    background-color: #FCF6BD;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 2px solid #94B49F;
+}
+
+.progress-bar {
+    background-color: #94B49F;
+    border-radius: 1rem;
+    transition: width 0.5s ease;
+}
+
+/* 입력 필드 */
+input[type="text"] {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid #FCF6BD;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    background-color: #FFFFFF;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #94B49F;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(148, 180, 159, 0.25);
+    transform: translateY(-2px);
+}
+
+/* 버튼 스타일 */
+.custom-btn-primary, .custom-btn-secondary {
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-btn-primary {
+    background-color: #94B49F;
+    color: white;
+    box-shadow: 0 4px 12px rgba(148, 180, 159, 0.3);
+}
+
+.custom-btn-primary:hover {
+    background-color: #7A9B84;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(148, 180, 159, 0.4);
+}
+
+.custom-btn-secondary {
+    background-color: #FCF6BD;
+    color: #5C4B51;
+    box-shadow: 0 4px 12px rgba(252, 246, 189, 0.3);
+}
+
+.custom-btn-secondary:hover {
+    background-color: #F7E898;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(252, 246, 189, 0.4);
+}
+
+/* 버튼 그룹 */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* 체크박스 그룹 */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.checkbox-option {
+    flex: 1 1 calc(33.333% - 1rem);
+    min-width: 200px;
+    background-color: #FFFFFF;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #FCF6BD;
+    transition: all 0.3s ease;
+}
+
+.checkbox-option:hover {
+    transform: translateY(-2px);
+    border-color: #94B49F;
+}
+
+/* 캐릭터 이미지 */
+.character-image {
+    max-width: 300px;
+    height: 300px;
+    margin: 2rem auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 24px rgba(148, 180, 159, 0.2);
+    border: 3px solid #94B49F;
+}
+
+.character-image img {
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.character-image:hover img {
+    transform: scale(1.05);
+}
+
+/* 결과 콘텐츠 */
+#result-content {
+    background-color: #FFFFFF;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(148, 180, 159, 0.1);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .checkbox-option {
+        flex: 1 1 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
