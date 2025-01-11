@@ -222,6 +222,48 @@ input[type="text"]:focus {
     box-shadow: 0 4px 16px rgba(148, 180, 159, 0.1);
 }
 
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.custom-btn-kakao {
+    background-color: #FEE500;
+    color: #000000;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.custom-btn-kakao:hover {
+    background-color: #FDD835;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(254, 229, 0, 0.3);
+    color: #000000;
+}
+
+.custom-btn-save {
+    background-color: #B4E197;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.custom-btn-save:hover {
+    background-color: #95D475;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(180, 225, 151, 0.3);
+    color: #ffffff;
+}
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .main-container {

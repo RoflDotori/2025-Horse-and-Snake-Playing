@@ -384,3 +384,55 @@ function restartTest() {
     document.getElementById('result').classList.add('d-none');
     document.getElementById('intro').classList.remove('d-none');
 }
+
+// 결과를 이미지로 저장하는 함수
+function saveAsImage() {
+    const resultElement = document.querySelector('.paper-background');
+    html2canvas(resultElement, {
+        scale: 2, // 고해상도 이미지를 위한 배율
+        useCORS: true, // 외부 이미지 포함 시 CORS 문제 방지
+        allowTaint: false, // 이미지 보안 정책 강화
+        logging: true // 디버깅 로그 활성화
+    }).then((canvas) => {
+        try {
+            const link = document.createElement('a');
+            link.download = '도토리숲_결과.png';
+            link.href = canvas.toDataURL('image/png', 1.0); // PNG 형식의 고품질 데이터 URL 생성
+            link.click();
+        } catch (error) {
+            console.error('이미지 다운로드 중 오류 발생:', error);
+        }
+    }).catch((error) => {
+        console.error('html2canvas 렌더링 오류:', error);
+    });
+}
+
+
+
+// 카카오톡 공유하기 함수
+function shareToKakao() {
+    const resultContent = document.querySelector('#result-content h3').textContent;
+    const imageUrl = document.querySelector('.character-image img').src;
+
+    Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: '2025 도토리숲의 뱀과 말',
+            description: resultContent,
+            imageUrl: imageUrl,
+            link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+            },
+        },
+        buttons: [
+            {
+                title: '나도 테스트하기',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                },
+            }
+        ]
+    });
+}
