@@ -385,34 +385,54 @@ function restartTest() {
     document.getElementById('intro').classList.remove('d-none');
 }
 
-// 결과를 이미지로 저장하는 함수
 function saveAsImage() {
-    const resultElement = document.querySelector('.paper-background');
-    html2canvas(resultElement, {
-        scale: 2, // 고해상도 이미지를 위한 배율
-        useCORS: true, // 외부 이미지 포함 시 CORS 문제 방지
-        allowTaint: false, // 이미지 보안 정책 강화
-        logging: true // 디버깅 로그 활성화
-    }).then((canvas) => {
-        try {
-            const link = document.createElement('a');
-            link.download = '도토리숲_결과.png';
-            link.href = canvas.toDataURL('image/png', 1.0); // PNG 형식의 고품질 데이터 URL 생성
-            link.click();
-        } catch (error) {
-            console.error('이미지 다운로드 중 오류 발생:', error);
+    let selectedType = answers[2]; // 검사 결과에서 선택된 유형 ('snake' 또는 'horse')
+    let imagePath = '';
+    let fileName = '';
+
+    if (selectedType === 'snake') {
+        // Snake의 선택된 결과 가져오기
+        const snakeType = snakeTypes[answers[5] || 'other']; // 선택된 snake 데이터
+        if (snakeType) {
+            imagePath = snakeType.image; // 이미지 경로
+            fileName = `${snakeType.type}.png`; // 파일명
         }
-    }).catch((error) => {
-        console.error('html2canvas 렌더링 오류:', error);
-    });
+    } else if (selectedType === 'horse') {
+        // Horse의 선택된 결과 가져오기
+        const horseData = horseColors[answers[5]]; // 선택된 horse 데이터
+        if (horseData) {
+            imagePath = horseData.image; // 이미지 경로
+            fileName = `${answers[5]}-horse.png`; // 파일명
+        }
+    }
+
+    // 이미지 다운로드
+    if (imagePath) {
+        const link = document.createElement('a');
+        link.download = fileName; // 파일 이름 설정
+        link.href = imagePath; // 이미지 경로
+        link.click(); // 다운로드 실행
+    } else {
+        console.error('유효한 검사 결과가 없습니다.');
+    }
 }
 
 
 
 // 카카오톡 공유하기 함수
 function shareToKakao() {
+    // 카카오 SDK가 초기화되었는지 확인
+    if (!Kakao.isInitialized()) {
+        Kakao.init('YOUR_APP_KEY'); // 여기 YOUR_APP_KEY를 카카오톡 앱 키로 대체
+    }
+
     const resultContent = document.querySelector('#result-content h3').textContent;
-    const imageUrl = document.querySelector('.character-image img').src;
+    const imageUrl = document.querySelector('.character-image img')?.src;
+
+    if (!imageUrl) {
+        console.error('이미지 URL을 찾을 수 없습니다.');
+        return;
+    }
 
     Kakao.Link.sendDefault({
         objectType: 'feed',
