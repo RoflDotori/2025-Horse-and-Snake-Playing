@@ -42,7 +42,7 @@ const snakeQuestions = [
             { value: "resource", text: "자원 부족 (예: 돈, 정보)" },
             { value: "opposition", text: "주변의 반대" }
         ],
-hasOther: true
+        hasOther: true
     },
     {
         id: 5,
@@ -97,13 +97,80 @@ const horseQuestions = [
         ]
     }
 ];
+const snakeTypes = {
+    'wave': {
+        type: '찰랑이는 물결뱀',
+        description: '때론 유연함이 문제를 더 쉽게 푸는 방법이 되기도 해요. \'찰랑이는 물결뱀\'과 함께라면 딱딱해지려는 계획이 부드러워질거에요. 제가 흘러가는대로 함께 오세요! 가끔은 이렇게 흘러가는대로 두어도 잘 도착할 수 있어요!',
+        image: 'images/snake-wave.png'
+    },
+    'blue': {
+        type: '푸른 파도 뱀',
+        description: '콰광! \'푸른 파도 뱀\'이 목표를 작은 모래알로 만들었어요! 덩치가 큰 목표는 어렵지만 작은 모래알 하나쯤은 금방 해치울 수 있으니까요!',
+        image: 'images/snake-blue.png'
+    },
+    'stream': {
+        type: '쫄쫄 시냇물 뱀',
+        description: '이런..어떻게 해야 할지 모르겠나요? \'쫄쫄 시냇물 뱀\'과 함께 도와줄 사람들을 찾아요! 쫄쫄 흐르는 시냇물을 따라 가다보면 먼저 이 물길을 타 본 사람들을 만날 수 있을거에요. (쫄쫄..) 꼭 필요한 사람을 늦지 않게 만날 수 있게 함께할게요!',
+        image: 'images/snake-stream.png'
+    },
+    'lake': {
+        type: '맑은 호수 뱀',
+        description: '\'맑은 호수뱀\'과 함께라면 맑은 머리로 꼭 필요한 자료들을 만나게 될 거에요. 앗…이런 너무 많이 찾았나. (냠냠) 괜찮아요! 자료는 제가 다 먹었어요! 잘 몰라서 목표가 흐려지지 않도록 (냠냠) 잘 찾아봐요!',
+        image: 'images/snake-lake.png'
+    },
+    'other': {
+        type: '별 총총 푸른 뱀',
+        description: '앗, 이미 장애물을 넘어갈 도토리만의 답을 알고 있군요! \'별총총 푸른 뱀\'은 한 발 짝 뒤에서 응원하고 있을게요! 잊지 마세요. 푸른 밤이 지나고 나면 파란 아침은 온답니다. (사실 깊고 푸른 밤에도 반짝이는 별들은 항상 있어요)',
+        image: 'images/snake-star.png'
+    }
+};
+
+const horseColors = {
+    'red': {
+        description: '일상이 감히 방해하지 못할 굳세고 단단한 2025년을 보낼거에요!',
+        image: 'images/horse-red.png'
+    },
+    'yellow': {
+        description: '한적한 오후의 따뜻한 햇살같이 평온한 2025년을 보낼거에요!',
+        image: 'images/horse-yellow.png'
+    },
+    'green': {
+        description: '세상에 처음 솟아나는 새싹처럼 쑥쑥 자라는 2025년을 보낼거에요!',
+        image: 'images/horse-green.png'
+    },
+    'blue': {
+        description: '우루루 돌진하는 파도처럼 질주하는 2025년을 보낼거에요!',
+        image: 'images/horse-blue.png'
+    },
+    'purple': {
+        description: '달콤한 꿈 같은 2025년을 보낼거에요! 나쁜 꿈은 깨어나면 그만, 좋은 꿈은 이루면 그만!',
+        image: 'images/horse-purple.png'
+    }
+};
+
+// 페이지 로드 시 URL 파라미터 확인
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.size > 0) {
+        // URL에 파라미터가 있으면 결과 페이지로 이동
+        answers = {};
+        for (let [key, value] of urlParams.entries()) {
+            try {
+                // 배열인 경우 파싱
+                answers[key] = value.startsWith('[') ? JSON.parse(value) : value;
+            } catch {
+                answers[key] = value;
+            }
+        }
+        showResult();
+    }
+};
 
 function startTest() {
     document.getElementById('intro').classList.add('d-none');
     document.getElementById('question-container').classList.remove('d-none');
     showQuestion();
 }
-
 function showQuestion() {
     const question = getCurrentQuestion();
     if (!question) return;
@@ -208,7 +275,6 @@ function showQuestion() {
 
     updateNavigationButtons();
 }
-
 function getCurrentQuestion() {
     if (currentQuestion < questions.length) {
         return questions[currentQuestion];
@@ -270,57 +336,27 @@ function nextQuestion() {
     }
 }
 
-const snakeTypes = {
-    'wave': {
-        type: '찰랑이는 물결뱀',
-        description: '때론 유연함이 문제를 더 쉽게 푸는 방법이 되기도 해요. \'찰랑이는 물결뱀\'과 함께라면 딱딱해지려는 계획이 부드러워질거에요. 제가 흘러가는대로 함께 오세요! 가끔은 이렇게 흘러가는대로 두어도 잘 도착할 수 있어요!',
-        image: 'images/snake-wave.png'
-    },
-    'blue': {
-        type: '푸른 파도 뱀',
-        description: '콰광! \'푸른 파도 뱀\'이 목표를 작은 모래알로 만들었어요! 덩치가 큰 목표는 어렵지만 작은 모래알 하나쯤은 금방 해치울 수 있으니까요!',
-        image: 'images/snake-blue.png'
-    },
-    'stream': {
-        type: '쫄쫄 시냇물 뱀',
-        description: '이런..어떻게 해야 할지 모르겠나요? \'쫄쫄 시냇물 뱀\'과 함께 도와줄 사람들을 찾아요! 쫄쫄 흐르는 시냇물을 따라 가다보면 먼저 이 물길을 타 본 사람들을 만날 수 있을거에요. (쫄쫄..) 꼭 필요한 사람을 늦지 않게 만날 수 있게 함께할게요!',
-        image: 'images/snake-stream.png'
-    },
-    'lake': {
-        type: '맑은 호수 뱀',
-        description: '\'맑은 호수뱀\'과 함께라면 맑은 머리로 꼭 필요한 자료들을 만나게 될 거에요. 앗…이런 너무 많이 찾았나. (냠냠) 괜찮아요! 자료는 제가 다 먹었어요! 잘 몰라서 목표가 흐려지지 않도록 (냠냠) 잘 찾아봐요!',
-        image: 'images/snake-lake.png'
-    },
-    'other': {
-        type: '별 총총 푸른 뱀',
-        description: '앗, 이미 장애물을 넘어갈 도토리만의 답을 알고 있군요! \'별총총 푸른 뱀\'은 한 발 짝 뒤에서 응원하고 있을게요! 잊지 마세요. 푸른 밤이 지나고 나면 파란 아침은 온답니다. (사실 깊고 푸른 밤에도 반짝이는 별들은 항상 있어요)',
-        image: 'images/snake-star.png'
+function shareResult() {
+    // 현재 답변들을 URL 파라미터로 변환
+    const params = new URLSearchParams();
+    for (let key in answers) {
+        if (Array.isArray(answers[key])) {
+            params.append(key, JSON.stringify(answers[key]));
+        } else {
+            params.append(key, answers[key]);
+        }
     }
-};
-
-const horseColors = {
-    'red': {
-        description: '일상이 감히 방해하지 못할 굳세고 단단한 2025년을 보낼거에요!',
-        image: 'images/horse-red.png'
-    },
-    'yellow': {
-        description: '한적한 오후의 따뜻한 햇살같이 평온한 2025년을 보낼거에요!',
-        image: 'images/horse-yellow.png'
-    },
-    'green': {
-        description: '세상에 처음 솟아나는 새싹처럼 쑥쑥 자라는 2025년을 보낼거에요!',
-        image: 'images/horse-green.png'
-    },
-    'blue': {
-        description: '우루루 돌진하는 파도처럼 질주하는 2025년을 보낼거에요!',
-        image: 'images/horse-blue.png'
-    },
-    'purple': {
-        description: '달콤한 꿈 같은 2025년을 보낼거에요! 나쁜 꿈은 깨어나면 그만, 좋은 꿈은 이루면 그만!',
-        image: 'images/horse-purple.png'
-    }
-};
-
+    
+    // 공유 URL 생성
+    const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    
+    // 클립보드에 복사
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('결과 링크가 복사되었습니다! 원하는 곳에 붙여넣기 하세요.');
+    }).catch(() => {
+        alert('링크 복사에 실패했습니다. 다시 시도해주세요.');
+    });
+}
 function showResult() {
     document.getElementById('question-container').classList.add('d-none');
     document.getElementById('result').classList.remove('d-none');
@@ -385,45 +421,9 @@ function restartTest() {
     document.getElementById('intro').classList.remove('d-none');
 }
 
-function saveAsImage() {
-    let selectedType = answers[2]; // 검사 결과에서 선택된 유형 ('snake' 또는 'horse')
-    let imagePath = '';
-    let fileName = '';
-
-    if (selectedType === 'snake') {
-        // Snake의 선택된 결과 가져오기
-        const snakeType = snakeTypes[answers[5] || 'other']; // 선택된 snake 데이터
-        if (snakeType) {
-            imagePath = snakeType.image; // 이미지 경로
-            fileName = `${snakeType.type}.png`; // 파일명
-        }
-    } else if (selectedType === 'horse') {
-        // Horse의 선택된 결과 가져오기
-        const horseData = horseColors[answers[5]]; // 선택된 horse 데이터
-        if (horseData) {
-            imagePath = horseData.image; // 이미지 경로
-            fileName = `${answers[5]}-horse.png`; // 파일명
-        }
-    }
-
-    // 이미지 다운로드
-    if (imagePath) {
-        const link = document.createElement('a');
-        link.download = fileName; // 파일 이름 설정
-        link.href = imagePath; // 이미지 경로
-        link.click(); // 다운로드 실행
-    } else {
-        console.error('유효한 검사 결과가 없습니다.');
-    }
-}
-
-
-
-// 카카오톡 공유하기 함수
 function shareToKakao() {
-    // 카카오 SDK가 초기화되었는지 확인
     if (!Kakao.isInitialized()) {
-        Kakao.init('YOUR_APP_KEY'); // 여기 YOUR_APP_KEY를 카카오톡 앱 키로 대체
+        Kakao.init('YOUR_APP_KEY');
     }
 
     const resultContent = document.querySelector('#result-content h3').textContent;

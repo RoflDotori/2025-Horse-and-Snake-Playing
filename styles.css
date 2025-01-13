@@ -264,6 +264,7 @@ input[type="text"]:focus {
     box-shadow: 0 4px 12px rgba(180, 225, 151, 0.3);
     color: #ffffff;
 }
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .main-container {
